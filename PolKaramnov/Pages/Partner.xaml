@@ -1,0 +1,40 @@
+﻿<Page x:Class="PolKaramnov.Pages.Partner"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PolKaramnov.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="500" d:DesignWidth="950"
+      Title="Partner">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="377*"/>
+            <RowDefinition Height="73*"/>
+        </Grid.RowDefinitions>
+        <DataGrid Grid.Row="0" Name="DataGridUser" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Тип партнёра" Binding="{Binding TypePartners}" Width="auto"/>
+                <DataGridTextColumn Header="Название" Binding="{Binding NamePartners}" Width="auto"/>
+                <DataGridTextColumn Header="Директор" Binding="{Binding Director}" Width="auto"/>
+                <DataGridTextColumn Header="Почта" Binding="{Binding Mail}" Width="auto"/>
+                <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}" Width="auto"/>
+                <DataGridTextColumn Header="Адрес" Binding="{Binding Address}" Width="auto"/>
+                <DataGridTextColumn Header="ИНН" Binding="{Binding INN}" Width="auto"/>
+                <DataGridTextColumn Header="Рейтинг" Binding="{Binding Rating}" Width="auto"/>
+
+                <DataGridTemplateColumn Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Name="ButtonEdit" Content="Редактировать" Click="ButtonEdit_Click"></Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button Grid.Row="1" Name="ButtonAdd" Content="Добавить" HorizontalAlignment="Left" Click="ButtonAdd_Click" ToolTip="Нажмите, чтобы добавить"/>
+        <Button Grid.Row="1" Name="ButtonDel" Content="Удалить" HorizontalAlignment="Right" Click="ButtonDel_Click" ToolTip="Нажмите, чтобы удалить"/>
+    </Grid>
+</Page>
