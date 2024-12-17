@@ -33,7 +33,10 @@
         <TextBlock Text="ИНН" Grid.Row="6" Grid.Column="0" Margin="10,25,0,0"/>
         <TextBlock Text="Рейтинг (0-10)" Grid.Row="7" Grid.Column="0" Margin="10,25,0,0"/>
 
-        <TextBox Text="{Binding TypePartners}" Grid.Row="0" Grid.Column="1"/>
+        <ComboBox Name="TypePartnersComboBox" SelectedItem="{Binding TypePartner}" 
+                  DisplayMemberPath="NameType" 
+                  SelectedValuePath="IdTypePartner" 
+                  Grid.Row="0" Grid.Column="1" Margin="0,10" Height="25" Width="729"/>
         <TextBox Text="{Binding NamePartners}" Grid.Row="1" Grid.Column="1"/>
         <TextBox Text="{Binding Director}" Grid.Row="2" Grid.Column="1"/>
         <TextBox Text="{Binding Mail}" Grid.Row="3" Grid.Column="1"/>

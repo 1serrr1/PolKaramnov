@@ -28,13 +28,19 @@ namespace PolKaramnov.Pages
                 _currentUser = selectedUser;
 
             DataContext = _currentUser;
+
+            var partnerTypes = KaramnovPolEntities2.GetContext().TypePartner.ToList();
+
+            TypePartnersComboBox.ItemsSource = partnerTypes;
+            TypePartnersComboBox.DisplayMemberPath = "NameType"; 
+            TypePartnersComboBox.SelectedValuePath = "IdTypePartner";
         }
 
         private void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
             StringBuilder errors = new StringBuilder();
 
-            if (_currentUser.TypePartners == 0)
+            if (_currentUser.TypePartners == null)
                 errors.AppendLine("Укажите тип партнёра!");
             if (string.IsNullOrWhiteSpace(_currentUser.NamePartners))
                 errors.AppendLine("Укажите название партнёра!");
