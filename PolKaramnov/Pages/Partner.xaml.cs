@@ -63,5 +63,18 @@ namespace PolKaramnov.Pages
                 DataGridUser.ItemsSource = KaramnovPolEntities2.GetContext().Partners.ToList();
             }
         }
+
+        private void ButtonHistory_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedPartner = DataGridUser.SelectedItem as Partners;
+            if (selectedPartner != null)
+            {
+                NavigationService.Navigate(new Spisok(selectedPartner.IdPartners));
+            }
+            else
+            {
+                MessageBox.Show("Выберите партнера для просмотра истории реализации.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
     }
 }

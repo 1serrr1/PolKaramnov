@@ -36,5 +36,7 @@
 
         <Button Grid.Row="1" Name="ButtonAdd" Content="Добавить" HorizontalAlignment="Left" Click="ButtonAdd_Click" ToolTip="Нажмите, чтобы добавить"/>
         <Button Grid.Row="1" Name="ButtonDel" Content="Удалить" HorizontalAlignment="Right" Click="ButtonDel_Click" ToolTip="Нажмите, чтобы удалить"/>
+        <Button Grid.Row="1" Name="ButtonHistory" Content="История реализации" Width="170" Click="ButtonHistory_Click" />
+        
     </Grid>
 </Page>

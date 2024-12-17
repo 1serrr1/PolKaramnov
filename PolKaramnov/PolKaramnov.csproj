@@ -96,6 +96,9 @@
     <Compile Include="Pages\Partner.xaml.cs">
       <DependentUpon>Partner.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Spisok.xaml.cs">
+      <DependentUpon>Spisok.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PartnerProducts.cs">
       <DependentUpon>Model3.tt</DependentUpon>
     </Compile>
@@ -135,6 +138,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Partner.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Spisok.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
