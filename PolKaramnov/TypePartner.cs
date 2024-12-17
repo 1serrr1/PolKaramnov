@@ -12,26 +12,18 @@ namespace PolKaramnov
     using System;
     using System.Collections.Generic;
     
-    public partial class Partners
+    public partial class TypePartner
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Partners()
+        public TypePartner()
         {
-            this.PartnerProducts = new HashSet<PartnerProducts>();
+            this.Partners = new HashSet<Partners>();
         }
     
-        public int IdPartners { get; set; }
-        public int TypePartners { get; set; }
-        public string NamePartners { get; set; }
-        public string Director { get; set; }
-        public string Mail { get; set; }
-        public string Phone { get; set; }
-        public string Address { get; set; }
-        public string INN { get; set; }
-        public int Rating { get; set; }
+        public int IdTypePartner { get; set; }
+        public string NameType { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PartnerProducts> PartnerProducts { get; set; }
-        public virtual TypePartner TypePartner { get; set; }
+        public virtual ICollection<Partners> Partners { get; set; }
     }
 }

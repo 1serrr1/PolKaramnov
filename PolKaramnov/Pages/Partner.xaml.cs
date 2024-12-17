@@ -23,7 +23,7 @@ namespace PolKaramnov.Pages
         public Partner()
         {
             InitializeComponent();
-            DataGridUser.ItemsSource = KaramnovPolEntities.GetContext().Partners.ToList();
+            DataGridUser.ItemsSource = KaramnovPolEntities2.GetContext().Partners.ToList();
         }
 
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
@@ -38,11 +38,11 @@ namespace PolKaramnov.Pages
             {
                 try
                 {
-                    KaramnovPolEntities.GetContext().Partners.RemoveRange(usersForRemoving);
-                    KaramnovPolEntities.GetContext().SaveChanges();
+                    KaramnovPolEntities2.GetContext().Partners.RemoveRange(usersForRemoving);
+                    KaramnovPolEntities2.GetContext().SaveChanges();
                     MessageBox.Show("Данные успешно удалены!");
 
-                    DataGridUser.ItemsSource = KaramnovPolEntities.GetContext().Partners.ToList();
+                    DataGridUser.ItemsSource = KaramnovPolEntities2.GetContext().Partners.ToList();
                 }
                 catch (Exception ex)
                 {
@@ -59,8 +59,8 @@ namespace PolKaramnov.Pages
         {
             if (Visibility == Visibility.Visible)
             {
-                KaramnovPolEntities.GetContext().ChangeTracker.Entries().ToList().ForEach(x => x.Reload());
-                DataGridUser.ItemsSource = KaramnovPolEntities.GetContext().Partners.ToList();
+                KaramnovPolEntities2.GetContext().ChangeTracker.Entries().ToList().ForEach(x => x.Reload());
+                DataGridUser.ItemsSource = KaramnovPolEntities2.GetContext().Partners.ToList();
             }
         }
     }

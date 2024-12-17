@@ -18,17 +18,19 @@ namespace PolKaramnov
         public Products()
         {
             this.PartnerProducts = new HashSet<PartnerProducts>();
+            this.MaterialType = new HashSet<MaterialType>();
         }
     
         public int IdProduct { get; set; }
         public int TypeProducts { get; set; }
-        public int NameProducts { get; set; }
+        public string NameProducts { get; set; }
         public string Articul { get; set; }
         public double MinCostPartners { get; set; }
     
-        public virtual MaterialType MaterialType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PartnerProducts> PartnerProducts { get; set; }
         public virtual ProductType ProductType { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MaterialType> MaterialType { get; set; }
     }
 }

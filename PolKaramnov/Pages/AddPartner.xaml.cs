@@ -34,7 +34,7 @@ namespace PolKaramnov.Pages
         {
             StringBuilder errors = new StringBuilder();
 
-            if (string.IsNullOrWhiteSpace(_currentUser.TypePartners))
+            if (_currentUser.TypePartners == 0)
                 errors.AppendLine("Укажите тип партнёра!");
             if (string.IsNullOrWhiteSpace(_currentUser.NamePartners))
                 errors.AppendLine("Укажите название партнёра!");
@@ -58,11 +58,11 @@ namespace PolKaramnov.Pages
             }
 
             if (_currentUser.IdPartners == 0)
-                KaramnovPolEntities.GetContext().Partners.Add(_currentUser);
+                KaramnovPolEntities2.GetContext().Partners.Add(_currentUser);
 
             try
             {
-                KaramnovPolEntities.GetContext().SaveChanges();
+                KaramnovPolEntities2.GetContext().SaveChanges();
                 MessageBox.Show("Данные успешно сохранены!");
             }
             catch (Exception ex)
