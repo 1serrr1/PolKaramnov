@@ -13,20 +13,19 @@ namespace PolKaramnov
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class KaramnovPolEntities : DbContext
+    public partial class KaramnovPolEntities3 : DbContext
     {
-        private static KaramnovPolEntities _context;
-        public KaramnovPolEntities()
-            : base("name=KaramnovPolEntities")
+        private static KaramnovPolEntities3 _context;
+        public KaramnovPolEntities3()
+            : base("name=KaramnovPolEntities3")
         {
         }
-        public static KaramnovPolEntities GetContext()
+        public static KaramnovPolEntities3 GetContext()
         {
             if (_context == null)
-                _context = new KaramnovPolEntities();
+                _context = new KaramnovPolEntities3();
             return _context;
         }
-
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -35,8 +34,9 @@ namespace PolKaramnov
         public virtual DbSet<MaterialType> MaterialType { get; set; }
         public virtual DbSet<PartnerProducts> PartnerProducts { get; set; }
         public virtual DbSet<Partners> Partners { get; set; }
-        public virtual DbSet<Products> Products { get; set; }
+        public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<ProductType> ProductType { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<TypePartner> TypePartner { get; set; }
     }
 }

@@ -21,6 +21,6 @@ namespace PolKaramnov
         public System.DateTime DateSale { get; set; }
     
         public virtual Partners Partners { get; set; }
-        public virtual Products Products1 { get; set; }
+        public virtual Product Product { get; set; }
     }
 }

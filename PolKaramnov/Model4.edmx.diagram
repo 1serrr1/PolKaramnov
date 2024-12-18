@@ -4,17 +4,19 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="2e66821ad12c43879b5aa6d09ce621c6" Name="Diagram1">
+      <Diagram DiagramId="be7c6f57d9ef4d5bb4fd8b7604d544ab" Name="Diagram1">
         <EntityTypeShape EntityType="KaramnovPolModel.MaterialType" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="KaramnovPolModel.PartnerProducts" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="KaramnovPolModel.Partners" Width="1.5" PointX="3" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="KaramnovPolModel.Products" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="KaramnovPolModel.Partners" Width="1.5" PointX="3" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="KaramnovPolModel.Product" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="KaramnovPolModel.ProductType" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="KaramnovPolModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
-        <AssociationConnector Association="KaramnovPolModel.FK_Products_Material_type" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="KaramnovPolModel.sysdiagrams" Width="1.5" PointX="2.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="KaramnovPolModel.TypePartner" Width="1.5" PointX="0.75" PointY="8.875" IsExpanded="true" />
         <AssociationConnector Association="KaramnovPolModel.FK_PartnerProducts_Partners" ManuallyRouted="false" />
         <AssociationConnector Association="KaramnovPolModel.FK_PartnerProducts_Products" ManuallyRouted="false" />
+        <AssociationConnector Association="KaramnovPolModel.FK_Partners_TypePartner" ManuallyRouted="false" />
         <AssociationConnector Association="KaramnovPolModel.FK_Products_Product_type" ManuallyRouted="false" />
+        <AssociationConnector Association="KaramnovPolModel.MaterialProduct" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

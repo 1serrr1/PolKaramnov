@@ -12,19 +12,25 @@ namespace PolKaramnov
     using System;
     using System.Collections.Generic;
     
-    public partial class MaterialType
+    public partial class Product
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public MaterialType()
+        public Product()
         {
-            this.Product = new HashSet<Product>();
+            this.PartnerProducts = new HashSet<PartnerProducts>();
+            this.MaterialType = new HashSet<MaterialType>();
         }
     
-        public int IdMaterial { get; set; }
-        public string TypeMaterial { get; set; }
-        public double ProcentMarriage { get; set; }
+        public int IdProduct { get; set; }
+        public int TypeProducts { get; set; }
+        public string NameProducts { get; set; }
+        public string Articul { get; set; }
+        public double MinCostPartners { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Product> Product { get; set; }
+        public virtual ICollection<PartnerProducts> PartnerProducts { get; set; }
+        public virtual ProductType ProductType { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MaterialType> MaterialType { get; set; }
     }
 }

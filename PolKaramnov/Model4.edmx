@@ -5,6 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="Хранилище KaramnovPolModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="MaterialProduct">
+          <Key>
+            <PropertyRef Name="MaterialId" />
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="MaterialId" Type="int" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="MaterialType">
           <Key>
             <PropertyRef Name="IdMaterial" />
@@ -28,7 +36,7 @@
             <PropertyRef Name="IdPartners" />
           </Key>
           <Property Name="IdPartners" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="TypePartners" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TypePartners" Type="int" Nullable="false" />
           <Property Name="NamePartners" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Director" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Mail" Type="nvarchar(max)" Nullable="false" />
@@ -37,13 +45,13 @@
           <Property Name="INN" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Rating" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="Products">
+        <EntityType Name="Product">
           <Key>
             <PropertyRef Name="IdProduct" />
           </Key>
           <Property Name="IdProduct" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TypeProducts" Type="int" Nullable="false" />
-          <Property Name="NameProducts" Type="int" Nullable="false" />
+          <Property Name="NameProducts" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Articul" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="MinCostPartners" Type="float" Nullable="false" />
         </EntityType>
@@ -65,6 +73,37 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
+        <EntityType Name="TypePartner">
+          <Key>
+            <PropertyRef Name="IdTypePartner" />
+          </Key>
+          <Property Name="IdTypePartner" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameType" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_MaterialProduct_MaterialType">
+          <End Role="MaterialType" Type="Self.MaterialType" Multiplicity="1" />
+          <End Role="MaterialProduct" Type="Self.MaterialProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MaterialType">
+              <PropertyRef Name="IdMaterial" />
+            </Principal>
+            <Dependent Role="MaterialProduct">
+              <PropertyRef Name="MaterialId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MaterialProduct_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="MaterialProduct" Type="Self.MaterialProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="IdProduct" />
+            </Principal>
+            <Dependent Role="MaterialProduct">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PartnerProducts_Partners">
           <End Role="Partners" Type="Self.Partners" Multiplicity="1" />
           <End Role="PartnerProducts" Type="Self.PartnerProducts" Multiplicity="*" />
@@ -78,10 +117,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PartnerProducts_Products">
-          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="PartnerProducts" Type="Self.PartnerProducts" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Products">
+            <Principal Role="Product">
               <PropertyRef Name="IdProduct" />
             </Principal>
             <Dependent Role="PartnerProducts">
@@ -89,52 +128,62 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Products_Material_type">
-          <End Role="MaterialType" Type="Self.MaterialType" Multiplicity="1" />
-          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+        <Association Name="FK_Partners_TypePartner">
+          <End Role="TypePartner" Type="Self.TypePartner" Multiplicity="1" />
+          <End Role="Partners" Type="Self.Partners" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="MaterialType">
-              <PropertyRef Name="IdMaterial" />
+            <Principal Role="TypePartner">
+              <PropertyRef Name="IdTypePartner" />
             </Principal>
-            <Dependent Role="Products">
-              <PropertyRef Name="NameProducts" />
+            <Dependent Role="Partners">
+              <PropertyRef Name="TypePartners" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Products_Product_type">
           <End Role="ProductType" Type="Self.ProductType" Multiplicity="1" />
-          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ProductType">
               <PropertyRef Name="IdTypeProducts" />
             </Principal>
-            <Dependent Role="Products">
+            <Dependent Role="Product">
               <PropertyRef Name="TypeProducts" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="Хранилище KaramnovPolModelContainer">
+          <EntitySet Name="MaterialProduct" EntityType="Self.MaterialProduct" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MaterialType" EntityType="Self.MaterialType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PartnerProducts" EntityType="Self.PartnerProducts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Partners" EntityType="Self.Partners" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductType" EntityType="Self.ProductType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypePartner" EntityType="Self.TypePartner" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_MaterialProduct_MaterialType" Association="Self.FK_MaterialProduct_MaterialType">
+            <End Role="MaterialType" EntitySet="MaterialType" />
+            <End Role="MaterialProduct" EntitySet="MaterialProduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MaterialProduct_Product" Association="Self.FK_MaterialProduct_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="MaterialProduct" EntitySet="MaterialProduct" />
+          </AssociationSet>
           <AssociationSet Name="FK_PartnerProducts_Partners" Association="Self.FK_PartnerProducts_Partners">
             <End Role="Partners" EntitySet="Partners" />
             <End Role="PartnerProducts" EntitySet="PartnerProducts" />
           </AssociationSet>
           <AssociationSet Name="FK_PartnerProducts_Products" Association="Self.FK_PartnerProducts_Products">
-            <End Role="Products" EntitySet="Products" />
+            <End Role="Product" EntitySet="Product" />
             <End Role="PartnerProducts" EntitySet="PartnerProducts" />
           </AssociationSet>
-          <AssociationSet Name="FK_Products_Material_type" Association="Self.FK_Products_Material_type">
-            <End Role="MaterialType" EntitySet="MaterialType" />
-            <End Role="Products" EntitySet="Products" />
+          <AssociationSet Name="FK_Partners_TypePartner" Association="Self.FK_Partners_TypePartner">
+            <End Role="TypePartner" EntitySet="TypePartner" />
+            <End Role="Partners" EntitySet="Partners" />
           </AssociationSet>
           <AssociationSet Name="FK_Products_Product_type" Association="Self.FK_Products_Product_type">
             <End Role="ProductType" EntitySet="ProductType" />
-            <End Role="Products" EntitySet="Products" />
+            <End Role="Product" EntitySet="Product" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -149,7 +198,7 @@
           <Property Name="IdMaterial" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TypeMaterial" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ProcentMarriage" Type="Double" Nullable="false" />
-          <NavigationProperty Name="Products" Relationship="Self.FK_Products_Material_type" FromRole="MaterialType" ToRole="Products" />
+          <NavigationProperty Name="Product" Relationship="Self.MaterialProduct" FromRole="MaterialType" ToRole="Product" />
         </EntityType>
         <EntityType Name="PartnerProducts">
           <Key>
@@ -161,14 +210,14 @@
           <Property Name="Quantity" Type="Int32" Nullable="false" />
           <Property Name="DateSale" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="Partners" Relationship="Self.FK_PartnerProducts_Partners" FromRole="PartnerProducts" ToRole="Partners" />
-          <NavigationProperty Name="Products1" Relationship="Self.FK_PartnerProducts_Products" FromRole="PartnerProducts" ToRole="Products" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_PartnerProducts_Products" FromRole="PartnerProducts" ToRole="Product" />
         </EntityType>
         <EntityType Name="Partners">
           <Key>
             <PropertyRef Name="IdPartners" />
           </Key>
           <Property Name="IdPartners" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TypePartners" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TypePartners" Type="Int32" Nullable="false" />
           <Property Name="NamePartners" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Director" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Mail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
@@ -177,19 +226,20 @@
           <Property Name="INN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Rating" Type="Int32" Nullable="false" />
           <NavigationProperty Name="PartnerProducts" Relationship="Self.FK_PartnerProducts_Partners" FromRole="Partners" ToRole="PartnerProducts" />
+          <NavigationProperty Name="TypePartner" Relationship="Self.FK_Partners_TypePartner" FromRole="Partners" ToRole="TypePartner" />
         </EntityType>
-        <EntityType Name="Products">
+        <EntityType Name="Product">
           <Key>
             <PropertyRef Name="IdProduct" />
           </Key>
           <Property Name="IdProduct" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TypeProducts" Type="Int32" Nullable="false" />
-          <Property Name="NameProducts" Type="Int32" Nullable="false" />
+          <Property Name="NameProducts" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Articul" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="MinCostPartners" Type="Double" Nullable="false" />
-          <NavigationProperty Name="MaterialType" Relationship="Self.FK_Products_Material_type" FromRole="Products" ToRole="MaterialType" />
-          <NavigationProperty Name="PartnerProducts" Relationship="Self.FK_PartnerProducts_Products" FromRole="Products" ToRole="PartnerProducts" />
-          <NavigationProperty Name="ProductType" Relationship="Self.FK_Products_Product_type" FromRole="Products" ToRole="ProductType" />
+          <NavigationProperty Name="PartnerProducts" Relationship="Self.FK_PartnerProducts_Products" FromRole="Product" ToRole="PartnerProducts" />
+          <NavigationProperty Name="ProductType" Relationship="Self.FK_Products_Product_type" FromRole="Product" ToRole="ProductType" />
+          <NavigationProperty Name="MaterialType" Relationship="Self.MaterialProduct" FromRole="Product" ToRole="MaterialType" />
         </EntityType>
         <EntityType Name="ProductType">
           <Key>
@@ -198,7 +248,7 @@
           <Property Name="IdTypeProducts" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TypeProducts" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="CoefficientTypeProducts" Type="Double" Nullable="false" />
-          <NavigationProperty Name="Products" Relationship="Self.FK_Products_Product_type" FromRole="ProductType" ToRole="Products" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_Products_Product_type" FromRole="ProductType" ToRole="Product" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -210,18 +260,14 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
-        <Association Name="FK_Products_Material_type">
-          <End Role="MaterialType" Type="Self.MaterialType" Multiplicity="1" />
-          <End Role="Products" Type="Self.Products" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MaterialType">
-              <PropertyRef Name="IdMaterial" />
-            </Principal>
-            <Dependent Role="Products">
-              <PropertyRef Name="NameProducts" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="TypePartner">
+          <Key>
+            <PropertyRef Name="IdTypePartner" />
+          </Key>
+          <Property Name="IdTypePartner" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Partners" Relationship="Self.FK_Partners_TypePartner" FromRole="TypePartner" ToRole="Partners" />
+        </EntityType>
         <Association Name="FK_PartnerProducts_Partners">
           <End Role="Partners" Type="Self.Partners" Multiplicity="1" />
           <End Role="PartnerProducts" Type="Self.PartnerProducts" Multiplicity="*" />
@@ -235,10 +281,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PartnerProducts_Products">
-          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="PartnerProducts" Type="Self.PartnerProducts" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Products">
+            <Principal Role="Product">
               <PropertyRef Name="IdProduct" />
             </Principal>
             <Dependent Role="PartnerProducts">
@@ -246,40 +292,61 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Partners_TypePartner">
+          <End Role="TypePartner" Type="Self.TypePartner" Multiplicity="1" />
+          <End Role="Partners" Type="Self.Partners" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypePartner">
+              <PropertyRef Name="IdTypePartner" />
+            </Principal>
+            <Dependent Role="Partners">
+              <PropertyRef Name="TypePartners" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Products_Product_type">
           <End Role="ProductType" Type="Self.ProductType" Multiplicity="1" />
-          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ProductType">
               <PropertyRef Name="IdTypeProducts" />
             </Principal>
-            <Dependent Role="Products">
+            <Dependent Role="Product">
               <PropertyRef Name="TypeProducts" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="KaramnovPolEntities" annotation:LazyLoadingEnabled="true">
+        <Association Name="MaterialProduct">
+          <End Role="MaterialType" Type="Self.MaterialType" Multiplicity="*" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="KaramnovPolEntities3" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="MaterialType" EntityType="Self.MaterialType" />
           <EntitySet Name="PartnerProducts" EntityType="Self.PartnerProducts" />
           <EntitySet Name="Partners" EntityType="Self.Partners" />
-          <EntitySet Name="Products" EntityType="Self.Products" />
+          <EntitySet Name="Product" EntityType="Self.Product" />
           <EntitySet Name="ProductType" EntityType="Self.ProductType" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
-          <AssociationSet Name="FK_Products_Material_type" Association="Self.FK_Products_Material_type">
-            <End Role="MaterialType" EntitySet="MaterialType" />
-            <End Role="Products" EntitySet="Products" />
-          </AssociationSet>
+          <EntitySet Name="TypePartner" EntityType="Self.TypePartner" />
           <AssociationSet Name="FK_PartnerProducts_Partners" Association="Self.FK_PartnerProducts_Partners">
             <End Role="Partners" EntitySet="Partners" />
             <End Role="PartnerProducts" EntitySet="PartnerProducts" />
           </AssociationSet>
           <AssociationSet Name="FK_PartnerProducts_Products" Association="Self.FK_PartnerProducts_Products">
-            <End Role="Products" EntitySet="Products" />
+            <End Role="Product" EntitySet="Product" />
             <End Role="PartnerProducts" EntitySet="PartnerProducts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Partners_TypePartner" Association="Self.FK_Partners_TypePartner">
+            <End Role="TypePartner" EntitySet="TypePartner" />
+            <End Role="Partners" EntitySet="Partners" />
           </AssociationSet>
           <AssociationSet Name="FK_Products_Product_type" Association="Self.FK_Products_Product_type">
             <End Role="ProductType" EntitySet="ProductType" />
-            <End Role="Products" EntitySet="Products" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="MaterialProduct" Association="Self.MaterialProduct">
+            <End Role="MaterialType" EntitySet="MaterialType" />
+            <End Role="Product" EntitySet="Product" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -287,7 +354,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Хранилище KaramnovPolModelContainer" CdmEntityContainer="KaramnovPolEntities">
+        <EntityContainerMapping StorageEntityContainer="Хранилище KaramnovPolModelContainer" CdmEntityContainer="KaramnovPolEntities3">
           <EntitySetMapping Name="MaterialType">
             <EntityTypeMapping TypeName="KaramnovPolModel.MaterialType">
               <MappingFragment StoreEntitySet="MaterialType">
@@ -323,9 +390,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Products">
-            <EntityTypeMapping TypeName="KaramnovPolModel.Products">
-              <MappingFragment StoreEntitySet="Products">
+          <EntitySetMapping Name="Product">
+            <EntityTypeMapping TypeName="KaramnovPolModel.Product">
+              <MappingFragment StoreEntitySet="Product">
                 <ScalarProperty Name="IdProduct" ColumnName="IdProduct" />
                 <ScalarProperty Name="TypeProducts" ColumnName="TypeProducts" />
                 <ScalarProperty Name="NameProducts" ColumnName="NameProducts" />
@@ -354,6 +421,22 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="TypePartner">
+            <EntityTypeMapping TypeName="KaramnovPolModel.TypePartner">
+              <MappingFragment StoreEntitySet="TypePartner">
+                <ScalarProperty Name="IdTypePartner" ColumnName="IdTypePartner" />
+                <ScalarProperty Name="NameType" ColumnName="NameType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="MaterialProduct" TypeName="KaramnovPolModel.MaterialProduct" StoreEntitySet="MaterialProduct">
+            <EndProperty Name="MaterialType">
+              <ScalarProperty Name="IdMaterial" ColumnName="MaterialId" />
+            </EndProperty>
+            <EndProperty Name="Product">
+              <ScalarProperty Name="IdProduct" ColumnName="ProductId" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

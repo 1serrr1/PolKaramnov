@@ -29,7 +29,7 @@ namespace PolKaramnov.Pages
 
             DataContext = _currentUser;
 
-            var partnerTypes = KaramnovPolEntities2.GetContext().TypePartner.ToList();
+            var partnerTypes = KaramnovPolEntities3.GetContext().TypePartner.ToList();
 
             TypePartnersComboBox.ItemsSource = partnerTypes;
             TypePartnersComboBox.DisplayMemberPath = "NameType"; 
@@ -54,8 +54,8 @@ namespace PolKaramnov.Pages
                 errors.AppendLine("Укажите адрес!");
             if (string.IsNullOrWhiteSpace(_currentUser.INN) || !IsValidINN(_currentUser.INN))
                 errors.AppendLine("Укажите корректный ИНН!");
-            if (_currentUser.Rating < 0 || _currentUser.Rating > 5)
-                errors.AppendLine("Рейтинг должен быть в диапазоне от 0 до 5!");
+            if (_currentUser.Rating < 0 || _currentUser.Rating > 10)
+                errors.AppendLine("Рейтинг должен быть в диапазоне от 0 до 10!");
 
             if (errors.Length > 0)
             {
@@ -64,11 +64,11 @@ namespace PolKaramnov.Pages
             }
 
             if (_currentUser.IdPartners == 0)
-                KaramnovPolEntities2.GetContext().Partners.Add(_currentUser);
+                KaramnovPolEntities3.GetContext().Partners.Add(_currentUser);
 
             try
             {
-                KaramnovPolEntities2.GetContext().SaveChanges();
+                KaramnovPolEntities3.GetContext().SaveChanges();
                 MessageBox.Show("Данные успешно сохранены!");
             }
             catch (Exception ex)

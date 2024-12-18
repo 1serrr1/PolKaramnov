@@ -15,7 +15,7 @@
         </Grid.RowDefinitions>
         <DataGrid Grid.Row="0" Name="DataGridUser" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="True">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Тип партнёра" Binding="{Binding TypePartners}" Width="auto"/>
+                <DataGridTextColumn Header="Тип партнёра" Binding="{Binding TypePartner.NameType}" Width="auto"/>
                 <DataGridTextColumn Header="Название" Binding="{Binding NamePartners}" Width="auto"/>
                 <DataGridTextColumn Header="Директор" Binding="{Binding Director}" Width="auto"/>
                 <DataGridTextColumn Header="Почта" Binding="{Binding Mail}" Width="auto"/>

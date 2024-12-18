@@ -17,7 +17,7 @@ namespace PolKaramnov
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ProductType()
         {
-            this.Products = new HashSet<Products>();
+            this.Product = new HashSet<Product>();
         }
     
         public int IdTypeProducts { get; set; }
@@ -25,6 +25,6 @@ namespace PolKaramnov
         public double CoefficientTypeProducts { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Products> Products { get; set; }
+        public virtual ICollection<Product> Product { get; set; }
     }
 }

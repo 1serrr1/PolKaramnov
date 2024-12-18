@@ -31,13 +31,13 @@ namespace PolKaramnov.Pages
         private void LoadHistoryData()
         {
             // Получение истории реализации из базы данных
-            var history = KaramnovPolEntities2.GetContext()
+            var history = KaramnovPolEntities3.GetContext()
                              .PartnerProducts
                              .Where(h => h.NamePartner == _partnerId)
                             .Select(h => new
                             {
                                 Название_Партнера = h.Partners.NamePartners,
-                                Название_Продукта = h.Products1.NameProducts,         
+                                Название_Продукта = h.Product.NameProducts,         
                                 Количество = h.Quantity,                     
                                 Дата_Продажи = h.DateSale
 
