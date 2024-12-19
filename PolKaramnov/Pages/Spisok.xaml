@@ -12,6 +12,7 @@
        
         <DataGrid Margin="0 50 0 0" x:Name="DataGridHistory" AutoGenerateColumns="True" 
                   IsReadOnly="True" CanUserAddRows="False" />
+        <Button Content="Рассчитать материал" Click="ButtonCalculateMaterial_Click" Margin="0 0 10 400" Height="30" Width="200" HorizontalAlignment="Right"/>
 
     </Grid>
 </Page>
