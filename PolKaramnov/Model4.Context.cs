@@ -10,9 +10,11 @@
 namespace PolKaramnov
 {
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
-    
+  
+
     public partial class KaramnovPolEntities3 : DbContext
     {
         private static KaramnovPolEntities3 _context;
@@ -38,5 +40,7 @@ namespace PolKaramnov
         public virtual DbSet<ProductType> ProductType { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<TypePartner> TypePartner { get; set; }
+
+        
     }
 }

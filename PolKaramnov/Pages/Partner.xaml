@@ -6,37 +6,50 @@
       xmlns:local="clr-namespace:PolKaramnov.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="500" d:DesignWidth="950"
-      Title="Partner">
+      Title="Партнёры">
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="377*"/>
-            <RowDefinition Height="73*"/>
-        </Grid.RowDefinitions>
-        <DataGrid Grid.Row="0" Name="DataGridUser" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="True">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Тип партнёра" Binding="{Binding TypePartner.NameType}" Width="auto"/>
-                <DataGridTextColumn Header="Название" Binding="{Binding NamePartners}" Width="auto"/>
-                <DataGridTextColumn Header="Директор" Binding="{Binding Director}" Width="auto"/>
-                <DataGridTextColumn Header="Почта" Binding="{Binding Mail}" Width="auto"/>
-                <DataGridTextColumn Header="Телефон" Binding="{Binding Phone}" Width="auto"/>
-                <DataGridTextColumn Header="Адрес" Binding="{Binding Address}" Width="auto"/>
-                <DataGridTextColumn Header="ИНН" Binding="{Binding INN}" Width="auto"/>
-                <DataGridTextColumn Header="Рейтинг" Binding="{Binding Rating}" Width="auto"/>
+    <Grid Margin="20">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0 0 0 70">
+            <StackPanel Margin="0 0 0 70">
+                <TextBlock Text="Список партнёров" FontSize="24" FontWeight="Bold" Margin="0,0,0,20"/>
 
-                <DataGridTemplateColumn Width="*">
-                    <DataGridTemplateColumn.CellTemplate>
+                <ListBox x:Name="ListBoxPartners" 
+                         ItemsSource="{Binding}" 
+                         BorderThickness="0" 
+                         HorizontalContentAlignment="Stretch"
+                         MouseDoubleClick="ListBoxPartners_MouseDoubleClick">
+                    <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Button Name="ButtonEdit" Content="Редактировать" Click="ButtonEdit_Click"></Button>
+                            <Border BorderBrush="Black" BorderThickness="1" CornerRadius="5" Padding="10" Margin="0,10">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0">
+                                        <TextBlock Text="{Binding TypePartners}" FontWeight="Bold"/>
+                                        <TextBlock Text="{Binding NamePartners}" FontWeight="Bold" Margin="0,5,0,0"/>
+                                        <TextBlock Text="{Binding Director}" Margin="0,5,0,0"/>
+                                        <TextBlock Text="{Binding Phone}" Margin="0,5,0,0"/>
+                                        <TextBlock Text="{Binding Rating, StringFormat='Рейтинг: {0}'}" Margin="0,5,0,0"/>
+                                    </StackPanel>
+                                    <TextBlock Grid.Column="1" 
+                                               Text="{Binding Discount, StringFormat={}{0}}" 
+                                               FontSize="16" 
+                                               FontWeight="Bold" 
+                                               VerticalAlignment="Center" 
+                                               HorizontalAlignment="Right"/>
+                                </Grid>
+                            </Border>
                         </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-        </DataGrid>
-
-        <Button Grid.Row="1" Name="ButtonAdd" Content="Добавить" HorizontalAlignment="Left" Click="ButtonAdd_Click" ToolTip="Нажмите, чтобы добавить"/>
-        <Button Grid.Row="1" Name="ButtonDel" Content="Удалить" HorizontalAlignment="Right" Click="ButtonDel_Click" ToolTip="Нажмите, чтобы удалить"/>
-        <Button Grid.Row="1" Name="ButtonHistory" Content="История реализации" Width="170" Click="ButtonHistory_Click" />
-        
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+        </ScrollViewer>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 370 0 0">
+            <Button Content="Удалить" Click="ButtonDel_Click" Margin="5" Height="30" Width="100"/>
+            <Button Content="История" Click="ButtonHistory_Click" Margin="5" Height="30" Width="100"/>
+            <Button Content="Добавить партнера" Click="ButtonAdd_Click" Margin="5" Height="30" Width="150"/>
+        </StackPanel>
     </Grid>
 </Page>
