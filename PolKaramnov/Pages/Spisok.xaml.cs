@@ -30,7 +30,7 @@ namespace PolKaramnov.Pages
         }
         private void LoadHistoryData()
         {
-            // Получение истории реализации из базы данных
+
             var history = KaramnovPolEntities3.GetContext()
                              .PartnerProducts
                              .Where(h => h.NamePartner == _partnerId)
@@ -44,13 +44,12 @@ namespace PolKaramnov.Pages
                             })
                      .ToList();
 
-            // Привязка данных к DataGrid
             DataGridHistory.ItemsSource = history;
         }
 
         private void ButtonCalculateMaterial_Click(object sender, RoutedEventArgs e)
         {
-            // Получаем все продукты, связанные с выбранным партнером
+
             var partnerProducts = KaramnovPolEntities3.GetContext().PartnerProducts
                 .Where(pp => pp.NamePartner == _partnerId)
                 .ToList();
@@ -63,13 +62,11 @@ namespace PolKaramnov.Pages
 
             decimal totalMaterialRequired = 0;
 
-            // Для каждого товара партнера рассчитываем необходимое количество материала
             foreach (var partnerProduct in partnerProducts)
             {
                 var product = partnerProduct.Product;
 
-                // Получаем тип продукта и коэффициент типа продукции
-                var productType = product.ProductType; // Связь с типом продукции
+                var productType = product.ProductType; 
                 var typeFactor = productType?.CoefficientTypeProducts;
 
                 decimal defectPercentage = typeFactor.HasValue ? (decimal)typeFactor.Value : 1; // Преобразование с обработкой null
@@ -77,14 +74,12 @@ namespace PolKaramnov.Pages
 
                 decimal materialPerProduct = 1;  
 
-                // Допустим, вы используете количество продукции для расчета
                 totalMaterialRequired += materialPerProduct * partnerProduct.Quantity;
 
                 totalMaterialRequired += materialPerProduct * partnerProduct.Quantity;
                 totalMaterialRequired *= (1 + defectPercentage / 100); // Увеличиваем на процент брака
             }
 
-            // Выводим результат
             MessageBox.Show($"Необходимое количество материала: {Math.Ceiling(totalMaterialRequired)} единиц с учетом брака.", "Рассчет материала", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }

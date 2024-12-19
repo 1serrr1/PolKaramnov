@@ -24,7 +24,6 @@ namespace PolKaramnov.Pages
         {
             InitializeComponent();
 
-            // Подключение данных с расчетом скидки
             ListBoxPartners.ItemsSource = KaramnovPolEntities3.GetContext()
          .Partners
          .ToList()
@@ -63,7 +62,6 @@ namespace PolKaramnov.Pages
         }
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
-            // Переход на страницу добавления нового партнера
             NavigationService.Navigate(new Pages.AddPartner(null));
         }
 
@@ -71,15 +69,13 @@ namespace PolKaramnov.Pages
         {
             List<PartnerDiscountViewModel> selectedPartners = ListBoxPartners.SelectedItems.Cast<PartnerDiscountViewModel>().ToList();
 
-            // Проверяем, есть ли выбранные элементы
             if (selectedPartners.Any())
             {
-                // Запрашиваем подтверждение на удаление
+
                 if (MessageBox.Show($"Вы точно хотите удалить {selectedPartners.Count} партнеров?", "Внимание", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
                     try
                     {
-                        // Удаляем партнеров из базы данных
                         foreach (var partner in selectedPartners)
                         {
                             var partnerToRemove = KaramnovPolEntities3.GetContext().Partners
@@ -90,13 +86,10 @@ namespace PolKaramnov.Pages
                             }
                         }
 
-                        // Сохраняем изменения
                         KaramnovPolEntities3.GetContext().SaveChanges();
 
-                        // Выводим сообщение об успешном удалении
                         MessageBox.Show("Партнеры успешно удалены!");
 
-                        // Обновляем данные в ListBox
                         ListBoxPartners.ItemsSource = KaramnovPolEntities3.GetContext()
                             .Partners
                             .ToList()
@@ -127,13 +120,12 @@ namespace PolKaramnov.Pages
 
         private void ButtonEdit_Click(object sender, RoutedEventArgs e)
         {
-            // Переход на страницу редактирования выбранного партнера
             NavigationService.Navigate(new Pages.AddPartner((sender as Button).DataContext as Partners));
         }
 
         private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            // Обновление данных при возврате на страницу
+
             if (Visibility == Visibility.Visible)
             {
                 KaramnovPolEntities3.GetContext().ChangeTracker.Entries().ToList().ForEach(x => x.Reload());
@@ -145,15 +137,12 @@ namespace PolKaramnov.Pages
         {
             var selectedPartner = ListBoxPartners.SelectedItem as PartnerDiscountViewModel;
 
-            // Проверяем, выбран ли партнер
             if (selectedPartner != null)
             {
-                // Если выбран партнер, переходим на страницу с историей реализации
                 NavigationService.Navigate(new Spisok(selectedPartner.IdPartners));
             }
             else
             {
-                // Если партнер не выбран, выводим предупреждающее сообщение
                 MessageBox.Show("Выберите партнера для просмотра истории реализации.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
@@ -162,7 +151,7 @@ namespace PolKaramnov.Pages
             var selectedPartner = ListBoxPartners.SelectedItem as PartnerDiscountViewModel;
             if (selectedPartner != null)
             {
-                // Переход на страницу редактирования выбранного партнера
+
                 var partner = KaramnovPolEntities3.GetContext().Partners
                     .FirstOrDefault(p => p.IdPartners == selectedPartner.IdPartners);
                 if (partner != null)
