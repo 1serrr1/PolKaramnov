@@ -50,14 +50,27 @@ namespace PolKaramnov.Pages
         private void ButtonCalculateMaterial_Click(object sender, RoutedEventArgs e)
         {
 
+            decimal totalMaterialRequired = CalculateMaterialRequired(_partnerId);
+
+            if (totalMaterialRequired == 0)
+            {
+                MessageBox.Show("У партнера нет продукции для расчета материала.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+            else
+            {
+                MessageBox.Show($"Необходимое количество материала: {Math.Ceiling(totalMaterialRequired)} единиц с учетом брака.", "Рассчет материала", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        private decimal CalculateMaterialRequired(int partnerId)
+        {
             var partnerProducts = KaramnovPolEntities3.GetContext().PartnerProducts
-                .Where(pp => pp.NamePartner == _partnerId)
+                .Where(pp => pp.NamePartner == partnerId)
                 .ToList();
 
             if (partnerProducts.Count == 0)
             {
-                MessageBox.Show("У партнера нет продукции для расчета материала.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
+                return 0; 
             }
 
             decimal totalMaterialRequired = 0;
@@ -66,21 +79,18 @@ namespace PolKaramnov.Pages
             {
                 var product = partnerProduct.Product;
 
-                var productType = product.ProductType; 
+                var productType = product.ProductType;
                 var typeFactor = productType?.CoefficientTypeProducts;
 
-                decimal defectPercentage = typeFactor.HasValue ? (decimal)typeFactor.Value : 1; // Преобразование с обработкой null
+                decimal defectPercentage = typeFactor.HasValue ? (decimal)typeFactor.Value : 1;
 
-
-                decimal materialPerProduct = 1;  
-
-                totalMaterialRequired += materialPerProduct * partnerProduct.Quantity;
+                decimal materialPerProduct = 1; 
 
                 totalMaterialRequired += materialPerProduct * partnerProduct.Quantity;
-                totalMaterialRequired *= (1 + defectPercentage / 100); // Увеличиваем на процент брака
+                totalMaterialRequired *= (1 + defectPercentage / 100);
             }
 
-            MessageBox.Show($"Необходимое количество материала: {Math.Ceiling(totalMaterialRequired)} единиц с учетом брака.", "Рассчет материала", MessageBoxButton.OK, MessageBoxImage.Information);
+            return totalMaterialRequired;
         }
     }
 }
