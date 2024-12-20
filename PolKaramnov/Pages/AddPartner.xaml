@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:PolKaramnov.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="500" d:DesignWidth="950"
-      Title="AddPartner">
+      Title="Добавление/редактирование партнера">
 
     <Grid>
         <Grid.RowDefinitions>
